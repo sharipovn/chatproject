@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'chat',
+    'channels',
+    'daphne',#it should be placed in installed apps lis above from django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,7 +70,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chatproject.wsgi.application'
+# WSGI_APPLICATION = 'chatproject.wsgi.application'
+ASGI_APPLICATION = 'chatproject.asgi.application'
 
 
 # Database

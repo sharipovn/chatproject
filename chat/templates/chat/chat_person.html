@@ -266,5 +266,32 @@
         <textarea name="text" oninput="this.style.height = ''; this.style.height = this.scrollHeight +'px'" id="the-message-to-send"></textarea>
         <button id="send-message-button">Send</button>
     </footer>
+
+    <script>
+
+        const url=`ws://127.0.01:8000/websocket/`;
+        const chat_websocket=new WebSocket(url);
+
+
+        const send_button = document.getElementById("send-message-button")
+        send_button.addEventListener("click",function(e) {
+
+            chat_websocket.send('{"type": "message","message":"Hello"}');
+            
+        })
+
+
+
+        
+
+        chat_websocket.onmessage=function(event){
+            console.log(event);  
+            
+            // if (event.data==="new_message") {    
+            // }
+        };
+
+
+    </script>
 </body>
 </html>
