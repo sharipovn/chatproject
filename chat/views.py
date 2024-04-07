@@ -4,6 +4,8 @@ from django.views import View
 
 class Main(View):
     def get(self,request):
+        # request.session['get_me_from_the_consumer']='this is me'
+        # print(request.session.get('get_me_from_the_main_page'))# None, because you can only edit session from view not from consumers
         return render(request=request,template_name='chat/main.html')
     
     
