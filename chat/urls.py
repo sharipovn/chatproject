@@ -7,5 +7,5 @@ urlpatterns = [
     path('register',views.Register.as_view(),name="register"),
     path('logout',views.Logout.as_view(),name="logout"),
     path('home',views.Home.as_view(),name="home"),
-    path('chat_person',views.ChatPerson.as_view(),name="chat_person"),
+    path('chat_person/<int:id>',views.ChatPerson.as_view(),name="chat_person"),
 ]

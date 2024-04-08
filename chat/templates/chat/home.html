@@ -91,16 +91,20 @@
 <body>
 
     <header>
-        <p>Username : my username</p>
-        <p>Name : my name</p>
+        <p>Username : {{user.username}}</p>
+        <p>Name : {{user.first_name}}</p>
         <a href="{% url 'logout' %}"><button>Logout</button></a>
     </header>
     
     <main>
-        <a href=""><section>
-            <img src="{% static 'chat/face.png' %}">
-            <p>person's name</p>
-        </section></a>
+        
+        {% for person in users %}
+            <a href="{% url 'chat_person' id=person.id %}"><section>
+                <img src="{% static 'chat/face.png' %}">
+                <p>{{person.first_name}} {{person.last_name}}</p>
+            </section></a>
+        {% endfor %}
+    
     </main>
 
 </body>
