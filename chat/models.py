@@ -15,3 +15,13 @@ class Message(models.Model):
     
     def __str__(self):
         return str(self.from_who)+" -> "+ str(self.to_who)
+    
+    
+
+class UserChannel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.PROTECT,default=None)
+    channel_name=models.TextField()
+    
+    
+    def __str__(self):
+        return str(self.user.username)+" - "+ str(self.channel_name)
