@@ -1,11 +1,20 @@
 from django.shortcuts import render
 from django.views import View
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 
 class Main(View):
     def get(self,request):
-        # request.session['get_me_from_the_consumer']='this is me'
-        # print(request.session.get('get_me_from_the_main_page'))# None, because you can only edit session from view not from consumers
+        
+        data={
+            "type": "receiver.function",
+            "message":"hi Nuriddin this event from the views"
+        }
+        channel_layer=get_channel_layer()
+        async_to_sync(channel_layer.group_send)("test",data)
+        
         return render(request=request,template_name='chat/main.html')
     
     
