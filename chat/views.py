@@ -111,7 +111,8 @@ class ChatPerson(View):
         channel_layer=get_channel_layer()
         async_to_sync(channel_layer.send)(user_channel_name.channel_name,data)
         
-        
+        messages_have_not_been_seen = Message.objects.filter(from_who=person,to_who=me)
+        messages_have_not_been_seen.update(has_been_seen=True)
         context={
             'person':person,
             'me':me,
