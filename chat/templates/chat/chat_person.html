@@ -240,27 +240,42 @@
         <p class="name-of-sender">Me : {{me.first_name}} {{me.last_name}}</p>
     </header>
 
-    <main id="messages-area">
-        <section class="to">
-            <div class="details">
-                <p>2024-01-30</p>
-                <div class="status"><div></div><div></div></div>
-                <p>10:55:02</p>
-            </div>
-            <div class="message">
-                <p style="overflow-wrap: anywhere;">Message from you</p>
-            </div>
-        </section>
 
-        <section class="from">
-            <div class="details">
-                <p>2024-01-30</p>
-                <p>10:55:02</p>
-            </div>
-            <div class="message">
-                <p style="overflow-wrap: anywhere;">Message from the other</p>
-            </div>
-        </section>
+
+
+    <main id="messages-area">
+
+        
+        {% for message in messages %}
+            
+            {% if message.from_who == me %}
+                <section class="to">
+                    <div class="details">
+                        <p>{{message.date}}</p>
+                        
+                        {% if message.has_been_seen %}
+                        <div class="status seen"><div></div><div></div></div>
+                        {% else %}
+                        <div class="status"><div></div><div></div></div>
+                        {% endif %}
+                        <p>{{message.time}}</p>
+                    </div>
+                    <div class="message">
+                        <p style="overflow-wrap: anywhere;">{{message.message}}</p>
+                    </div>
+                </section>
+                {% elif message.from_who == person  %}
+                    <section class="from">
+                        <div class="details">
+                            <p>{{message.date}}</p>
+                            <p>{{message.time}}</p>
+                        </div>
+                        <div class="message">
+                            <p style="overflow-wrap: anywhere;">{{message.message}}</p>
+                        </div>
+                    </section>
+            {% endif %}
+        {% endfor %}        
     </main> 
 
     <footer>
@@ -316,9 +331,18 @@
                     </div>
                     <div class="message">
                         <p style="overflow-wrap: anywhere;">${received_data.data}</p>
-                    </div>
+                    </div> 
                 </section>
-            `);
+            `)
+                chat_websocket.send(`{"type": "i_have_seen_the_messages"}`)
+
+            } else if(received_data.type_of_data == "the_messages_has_been_seen_from_the_other"){
+                
+                const my_messages = document.getElementsByClassName('status')
+                
+                for( let i=0; my_messages.length>i;i++ ){
+                    my_messages[i].classList.add("seen");
+                }
             }
         };
 
